@@ -33,6 +33,8 @@ abstract class MyColors {
 
   static const Color GreenColor = Color(0xFFC4EB89);
   static const Color Blue_Gr = Color(0xFF5EC4D6);
+  static const Color Light_Grey = Color(0xFF282828);
+  static const Color Selected_Grey = Color(0xFF393939);
 
   static MaterialColor ToastGreen = _getMaterialColor(0, 209, 108, 0xFF00D16C);
   static MaterialColor ToastGrey = _getMaterialColor(196, 196, 196, 0xFFC4C4C4);

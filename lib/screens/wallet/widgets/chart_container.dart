@@ -9,8 +9,9 @@ import 'dart:math';
 
 class ChartContainer extends StatefulWidget {
   final Future<List<ChartDataPoint>> chartPoints;
+  final bool showHeader;
 
-  ChartContainer({this.chartPoints});
+  ChartContainer({this.chartPoints, this.showHeader = true});
 
   @override
   _ChartContainerState createState() => _ChartContainerState();
@@ -22,13 +23,13 @@ class _ChartContainerState extends State<ChartContainer> {
   Duration _displayedChartDuration;
 
   static const SizedBox _bigHeightDivider = SizedBox(
-    height: 20,
+    height: 20
   );
   static const SizedBox _midHeightDivider = SizedBox(
-    height: 10,
+    height: 10
   );
   static const SizedBox _smallHeightDivider = SizedBox(
-    height: 5,
+    height: 5
   );
 
   Future<ValueLockedChartData> _getFutureChartData(Duration duration) async {
@@ -69,6 +70,7 @@ class _ChartContainerState extends State<ChartContainer> {
         future: futureData,
         builder: (context, snap) {
           return Column(children: [
+            if(widget.showHeader)
             _buildChangeIndicator(snap),
             _midHeightDivider,
             _buildBody(snap),
