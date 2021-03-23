@@ -1,8 +1,11 @@
 import 'dart:ui';
 
+import 'package:deus_mobile/screens/wallet_intro_screen/widgets/form/seed_phrase_grid.dart';
+import 'package:deus_mobile/statics/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'form/paper_form.dart';
 import 'form/paper_input.dart';
@@ -11,7 +14,8 @@ import '../../../core/widgets/grey_outline_button.dart';
 import '../../../core/widgets/raised_gradient_button.dart';
 
 class ConfirmMnemonic extends HookWidget {
-  ConfirmMnemonic({this.mnemonic, this.errors, this.onConfirm, this.onGenerateNew});
+  ConfirmMnemonic(
+      {this.mnemonic, this.errors, this.onConfirm, this.onGenerateNew});
 
   final String mnemonic;
   final List<String> errors;
@@ -19,10 +23,28 @@ class ConfirmMnemonic extends HookWidget {
   final Function onGenerateNew;
 
   final darkGrey = Color(0xFF1C1C1C);
-  final LinearGradient button_gradient = LinearGradient(colors: [Color(0xFF0779E4), Color(0xFF1DD3BD)]);
+  final LinearGradient button_gradient =
+      LinearGradient(colors: [Color(0xFF0779E4), Color(0xFF1DD3BD)]);
+
+  List<String> shownWords = [];
+
+  List<String> _testList = [
+    'sa',
+    'asdf',
+    'oqu',
+    'asöjdnb',
+    'cyvxcv',
+    'qwe',
+    'pqiwe'
+  ];
+
 
   @override
   Widget build(BuildContext context) {
+    double fullWidth = MediaQuery.of(context).size.width - 60;
+//letter = 10px
+// edges = 60px
+
     var mnemonicController = useTextEditingController();
     return Stack(
       children: [
@@ -40,7 +62,7 @@ class ConfirmMnemonic extends HookWidget {
                   style: TextStyle(fontSize: 12),
                 ),
               ),
-              _buildConfirmContainer(mnemonicController),
+              _buildConfirmContainer(mnemonicController, context),
             ],
           ),
         )
@@ -48,7 +70,8 @@ class ConfirmMnemonic extends HookWidget {
     );
   }
 
-  Widget _buildConfirmContainer(TextEditingController mnemonicController) {
+
+  Widget _buildConfirmContainer(TextEditingController mnemonicController, BuildContext context) {
     return PaperForm(
       padding: 0,
       actionButtons: <Widget>[
@@ -57,15 +80,23 @@ class ConfirmMnemonic extends HookWidget {
         RaisedGradientButton(
           gradient: button_gradient,
           label: 'CONFIRM',
-          onPressed: this.onConfirm != null ? () => this.onConfirm(mnemonicController.value.text) : null,
+          onPressed: this.onConfirm != null
+              ? () => this.onConfirm(mnemonicController.value.text)
+              : null,
         ),
       ],
       children: <Widget>[
         PaperValidationSummary(this.errors),
-        _buildConfirmTextField(mnemonicController),
+        SeedPhraseGrid(
+          wordList: _testList,
+          context: context,
+        )
+        //_buildConfirmTextField(mnemonicController),
       ],
     );
   }
+
+
 
   Container _buildConfirmTextField(TextEditingController mnemonicController) {
     return Container(

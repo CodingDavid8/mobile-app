@@ -1,3 +1,4 @@
+import 'package:deus_mobile/screens/wallet_intro_screen/wallet_create_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:deus_mobile/service/analytics_service.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -69,7 +70,7 @@ class _DEUSAppState extends State<DEUSApp> {
             debugShowCheckedModeBanner: false,
             theme: MyStyles.theme,
             onGenerateRoute: (settings) => onGenerateRoute(settings, context),
-            initialRoute: kInitialRoute,
+            initialRoute: WalletCreatePage.url,
           );
         },
       );
